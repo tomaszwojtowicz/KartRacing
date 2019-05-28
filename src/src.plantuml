@@ -1,0 +1,218 @@
+@startuml
+
+title __SRC's Class Diagram__\n
+
+  package  {
+    class Blue_Kart {
+        {static} + BLUE_KART_STARTING_POINT : Point
+        {static} + BLUE_KART_STARTING_IMAGE : byte
+        + Blue_Kart()
+        # populate_image_array()
+    }
+  }
+  
+
+  package  {
+    enum Difficulty_level {
+      EASY
+      NORMAL
+      HARD
+      slow_down_factor
+    }
+  }
+  
+
+  package  {
+    abstract class Kart {
+        {static} + KART_IMAGE_SIZE : Point
+        {static} + IMAGES_PER_KART : byte
+        # images : ImageIcon[]
+        # current_image : ImageIcon
+        # size : Point
+        # boundary : Rectangle
+        # location : Point
+        {static} # MAX_SPEED : byte
+        {static} # ACCELERATION_RATE : byte
+        {static} # BRAKING_RATE : byte
+        {static} # DECELERATION_RATE : byte
+        # speed : byte
+        # orientation : byte
+        # get_location()
+        # set_location()
+        # get_current_image()
+        # set_kart_image()
+        # accelerate()
+        # brake()
+        # decelerate()
+        # turn_left()
+        # turn_right()
+        # update_location()
+        - get_speed_vector()
+        # get_boundary()
+        # update_boundary()
+        {abstract} # populate_image_array()
+    }
+  }
+  
+
+  package  {
+    class Racetrack {
+        {static} # size : Point
+        {static} # background : ImageIcon
+        {static} # central_reservation : Rectangle
+    }
+  }
+  
+
+  package  {
+    class Red_Kart {
+        {static} + RED_KART_STARTING_POINT : Point
+        {static} + RED_KART_STARTING_IMAGE : byte
+        + Red_Kart()
+        # populate_image_array()
+    }
+  }
+  
+
+  package  {
+    class Resources {
+        {static} + BACKGROUND_MUSIC : File
+        {static} + KART_CRASH : File
+        {static} + KART_SCRAPING : File
+        {static} + THUD : File
+        {static} + EXPLOSION : ImageIcon
+        {static} + RACETRACK : ImageIcon
+    }
+  }
+  
+
+  package  {
+    class UI {
+        {static} + DIFFICULTY_LEVEL : Difficulty_level
+        {static} + ui_panel : UI_Panel
+        {static} + spash_screen : UI_Panel
+        + UI()
+        {static} + main()
+        {static} ~ play_looped_audio_clip()
+        {static} ~ play_audio_clip()
+        + keyPressed()
+        + keyReleased()
+        + keyTyped()
+    }
+  }
+  
+
+  package  {
+    class UI_Panel {
+        # quit_btn : JButton
+        ~ karts : Kart[]
+        ~ timer : Timer
+        ~ karts_crashed : boolean
+        + UI_Panel()
+        + paintComponent()
+        + actionPerformed()
+    }
+  }
+  
+
+  Blue_Kart -up-|> Kart
+  Red_Kart -up-|> Kart
+  UI -up-|> KeyListener
+  UI -up-|> JFrame
+  AccessibleJFrame -up-|> AccessibleAWTFrame
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  AccessibleAWTFrame -up-|> AccessibleAWTWindow
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  AccessibleAWTWindow -up-|> AccessibleAWTContainer
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  WindowDisposerRecord -up-|> DisposerRecord
+  AccessibleAWTContainer -up-|> AccessibleAWTComponent
+  AccessibleAWTContainer +-down- AccessibleContainerHandler
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  WakingRunnable -up-|> Runnable
+  DropTargetEventTargetFilter -up-|> EventTargetFilter
+  MouseEventTargetFilter -up-|> EventTargetFilter
+  AccessibleAWTComponent -up-|> Serializable
+  AccessibleAWTComponent -up-|> AccessibleComponent
+  AccessibleAWTComponent -up-|> AccessibleContext
+  AccessibleAWTComponent +-down- AccessibleAWTFocusHandler
+  AccessibleAWTComponent +-down- AccessibleAWTComponentHandler
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  DummyRequestFocusController -up-|> RequestFocusController
+  SingleBufferStrategy -up-|> BufferStrategy
+  BltSubRegionBufferStrategy -up-|> SubRegionShowable
+  BltSubRegionBufferStrategy -up-|> BltBufferStrategy
+  FlipSubRegionBufferStrategy -up-|> SubRegionShowable
+  FlipSubRegionBufferStrategy -up-|> FlipBufferStrategy
+  BltBufferStrategy -up-|> BufferStrategy
+  FlipBufferStrategy -up-|> BufferStrategy
+  ProxyCapabilities -up-|> ExtendedBufferCapabilities
+  FlipContents -up-|> AttributeValue
+  UI_Panel -up-|> ActionListener
+  UI_Panel -up-|> JPanel
+  UI_Panel o-- UI : UI_frame
+  UI_Panel o-- Racetrack : racetrack
+  UI_Panel o-- Kart : blue_kart
+  UI_Panel o-- Kart : red_kart
+  AccessibleJPanel -up-|> AccessibleJComponent
+  AccessibleFocusHandler -up-|> FocusListener
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  ReadObjectCallback -up-|> ObjectInputValidation
+  AccessibleJComponent -up-|> AccessibleExtendedComponent
+  AccessibleJComponent -up-|> AccessibleAWTContainer
+  AccessibleJComponent +-down- AccessibleFocusHandler
+  AccessibleJComponent +-down- AccessibleContainerHandler
+  AccessibleFocusHandler -up-|> FocusListener
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  KeyboardState -up-|> Serializable
+  ActionStandin -up-|> Action
+  AccessibleAWTContainer -up-|> AccessibleAWTComponent
+  AccessibleAWTContainer +-down- AccessibleContainerHandler
+  AccessibleContainerHandler -up-|> ContainerListener
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  WakingRunnable -up-|> Runnable
+  DropTargetEventTargetFilter -up-|> EventTargetFilter
+  MouseEventTargetFilter -up-|> EventTargetFilter
+  AccessibleAWTComponent -up-|> Serializable
+  AccessibleAWTComponent -up-|> AccessibleComponent
+  AccessibleAWTComponent -up-|> AccessibleContext
+  AccessibleAWTComponent +-down- AccessibleAWTFocusHandler
+  AccessibleAWTComponent +-down- AccessibleAWTComponentHandler
+  AccessibleAWTFocusHandler -up-|> FocusListener
+  AccessibleAWTComponentHandler -up-|> ComponentListener
+  DummyRequestFocusController -up-|> RequestFocusController
+  SingleBufferStrategy -up-|> BufferStrategy
+  BltSubRegionBufferStrategy -up-|> SubRegionShowable
+  BltSubRegionBufferStrategy -up-|> BltBufferStrategy
+  FlipSubRegionBufferStrategy -up-|> SubRegionShowable
+  FlipSubRegionBufferStrategy -up-|> FlipBufferStrategy
+  BltBufferStrategy -up-|> BufferStrategy
+  FlipBufferStrategy -up-|> BufferStrategy
+  ProxyCapabilities -up-|> ExtendedBufferCapabilities
+  FlipContents -up-|> AttributeValue
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
